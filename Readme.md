@@ -22,7 +22,7 @@ rc=$?
 exit $rc
 ```
 
-You can install `winetricks` and run `winetricks -q dxvk` to allow topaz to see your gpu. But it won't work because dxvk doesn't support directx 12 (directml) which is required. vkd3d in winesticks supports, can gpu is used, but thi image is blured, so it isn't proper directml support
+You can install `winetricks` and run `winetricks -q dxvk` to allow topaz to see your gpu. But it won't work because dxvk doesn't support direct3d12 (directml) which is required. Vkd3d in winesticks does support, gpu is utilized, but the image is blured and glitched, so it isn't a proper directml support
 
 <details>
 <summary>
