@@ -16,6 +16,7 @@ If you use Linux, you need to write a script, which launches `tpai.exe` via wine
 #!/bin/bash
 cd "$(dirname "$0")"
 export WINEDEBUG=-all
+export DXVK_LOG_LEVEL=warn
 wine <path to tpai.exe> "$@"
 rc=$?
 exit $rc
@@ -36,6 +37,7 @@ For Linux:
 #!/bin/bash
 cd "$(dirname "$0")"
 export WINEDEBUG=-all
+export DXVK_LOG_LEVEL=warn
 if [ ! -f 'App/Topaz Photo AI/Topaz Photo AI_.exe' ]; then
     mv 'App/Topaz Photo AI/Topaz Photo AI.exe' 'App/Topaz Photo AI/Topaz Photo AI_.exe'
     mv 'App/Topaz Photo AI/tpai.exe' 'App/Topaz Photo AI/Topaz Photo AI.exe'
