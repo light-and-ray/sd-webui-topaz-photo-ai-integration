@@ -22,7 +22,7 @@ rc=$?
 exit $rc
 ```
 
-You can install `winetricks` and run `winetricks -q dxvk` to allow topaz to see your gpu. But it won't work because dxvk doesn't support direct3d12 (directml) which is required. Vkd3d in winesticks does support, gpu is utilized, but the image is blured and glitched, so it isn't a proper directml support
+You can install `winetricks` and run `winetricks -q dxvk` to allow topaz to see your gpu. But it won't work because dxvk doesn't support directx12 (directml) which is required. Vkd3d in winesticks does support it partially, gpu is utilized, but the image is blured and glitched, so it isn't a proper directml support
 
 <details>
 <summary>
@@ -72,7 +72,7 @@ exit /b %rc%
 
 </details>
 
-Btw this extension is more about fun, and adding topaz in webui just because it's possibe. If you want to get models with similar quality, you can use [4x-Nomos8kHAT-L-otf](https://openmodeldb.info/models/4x-Nomos8kHAT-L-otf) and [4x-FaceUpDAT](https://openmodeldb.info/models/4x-FaceUpDAT), place them into `models/DAT` directory, or even you can try [StableSR](https://github.com/pkuliyi2015/sd-webui-stablesr)
+Just in case, this extension is more about fun, and adding topaz in webui just because it's possibe. If you want to get models with similar quality, you can use [4x-Nomos8kHAT-L-otf](https://openmodeldb.info/models/4x-Nomos8kHAT-L-otf) and [4x-FaceUpDAT](https://openmodeldb.info/models/4x-FaceUpDAT), place them into `models/DAT` directory, or even you can try [StableSR](https://github.com/pkuliyi2015/sd-webui-stablesr)
 
 Btw in some cases Topaz shows the best quality:
 ![](/images/comparation.jpg)
