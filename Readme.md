@@ -34,12 +34,16 @@ For Linux:
 #!/bin/bash
 cd "$(dirname "$0")"
 export WINEDEBUG=-all
-mv 'App/Topaz Photo AI/Topaz Photo AI.exe' 'App/Topaz Photo AI/Topaz Photo AI_.exe'
-mv 'App/Topaz Photo AI/tpai.exe' 'App/Topaz Photo AI/Topaz Photo AI.exe'
+if [ ! -f 'App/Topaz Photo AI/Topaz Photo AI_.exe' ]; then
+    mv 'App/Topaz Photo AI/Topaz Photo AI.exe' 'App/Topaz Photo AI/Topaz Photo AI_.exe'
+    mv 'App/Topaz Photo AI/tpai.exe' 'App/Topaz Photo AI/Topaz Photo AI.exe'
+fi
 xvfb-run wine PhotoAIportable.exe "$@"
 rc=$?
-mv 'App/Topaz Photo AI/Topaz Photo AI.exe' 'App/Topaz Photo AI/tpai.exe'
-mv 'App/Topaz Photo AI/Topaz Photo AI_.exe' 'App/Topaz Photo AI/Topaz Photo AI.exe'
+if [ ! -f 'App/Topaz Photo AI/tpai.exe' ]; then
+    mv 'App/Topaz Photo AI/Topaz Photo AI.exe' 'App/Topaz Photo AI/tpai.exe'
+    mv 'App/Topaz Photo AI/Topaz Photo AI_.exe' 'App/Topaz Photo AI/Topaz Photo AI.exe'
+fi
 exit $rc
 ```
 
@@ -50,12 +54,16 @@ Or for Windows (I'm not sure, converted by AI)
 @echo off
 setlocal
 cd /d "%~dp0"
-move "App\Topaz Photo AI\Topaz Photo AI.exe" "App\Topaz Photo AI\Topaz Photo AI_.exe"
-move "App\Topaz Photo AI\tpai.exe" "App\Topaz Photo AI\Topaz Photo AI.exe"
+if not exist "App\Topaz Photo AI\Topaz Photo AI_.exe" (
+    move "App\Topaz Photo AI\Topaz Photo AI.exe" "App\Topaz Photo AI\Topaz Photo AI_.exe"
+    move "App\Topaz Photo AI\tpai.exe" "App\Topaz Photo AI\Topaz Photo AI.exe"
+)
 start /wait /min "" cmd /c "PhotoAIportable.exe %*"
 set rc=%errorlevel%
-move "App\Topaz Photo AI\Topaz Photo AI.exe" "App\Topaz Photo AI\tpai.exe"
-move "App\Topaz Photo AI\Topaz Photo AI_.exe" "App\Topaz Photo AI\Topaz Photo AI.exe"
+if not exist "App\Topaz Photo AI\tpai.exe" (
+    move "App\Topaz Photo AI\Topaz Photo AI.exe" "App\Topaz Photo AI\tpai.exe"
+    move "App\Topaz Photo AI\Topaz Photo AI_.exe" "App\Topaz Photo AI\Topaz Photo AI.exe"
+)
 exit /b %rc%
 ```
 
