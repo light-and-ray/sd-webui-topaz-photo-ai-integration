@@ -11,7 +11,7 @@ from topaz_photo_ai.tools import runTopaz
 
 
 def upscale(img: Image.Image, scale: int) -> Image.Image:
-    return runTopaz(img, '--upscale', f'scale={scale}')
+    return runTopaz(img, '--upscale', f'scale={scale}', '--face_recovery', 'enabled=false')
 
 def sharpen(img: Image.Image, percent: int) -> Image.Image:
-    return runTopaz(img, '--sharpen', f'strength={percent}')
+    return runTopaz(img, '--sharpen', f'strength={percent}', '--face_recovery', 'enabled=false')
