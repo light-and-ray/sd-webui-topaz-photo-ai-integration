@@ -19,7 +19,7 @@ rc=$?
 exit $rc
 ```
 
-You also need to install `winetricks` and run `winetricks -q dxvk` to allow topaz to see your gpu
+You also need to install `winetricks` and run `winetricks -q dxvk` to allow topaz to see your gpu. But it still can't use it idk why
 
 
 <details>
