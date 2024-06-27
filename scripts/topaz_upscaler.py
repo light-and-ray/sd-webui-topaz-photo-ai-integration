@@ -10,6 +10,8 @@ data = [
     Fields(2),
     Fields(3),
     Fields(4),
+    Fields(5),
+    Fields(6),
 ]
 
 class BaseClass(Upscaler):
@@ -35,6 +37,12 @@ class Class1(BaseClass, Upscaler):
 class Class2(BaseClass, Upscaler):
     def __init__(self, dirname):
         super().__init__(dirname, data[2])
+class Class3(BaseClass, Upscaler):
+    def __init__(self, dirname):
+        super().__init__(dirname, data[3])
+class Class4(BaseClass, Upscaler):
+    def __init__(self, dirname):
+        super().__init__(dirname, data[4])
 
 
 
