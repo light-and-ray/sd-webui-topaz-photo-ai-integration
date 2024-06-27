@@ -5,6 +5,8 @@ This extension integrates [Topaz Photo AI](https://www.topazlabs.com/topaz-photo
 ![](/images/preview.png)
 ![](/images/upscalers.png)
 
+Sharpen AI ik extras tab will be added soon
+
 To copy path to file in Windows, you need to press right mouse click holding "Shift" button, and select "Copy file as path"
 
 
@@ -19,7 +21,7 @@ rc=$?
 exit $rc
 ```
 
-You also need to install `winetricks` and run `winetricks -q dxvk` to allow topaz to see your gpu
+You also need to install `winetricks` and run `winetricks -q dxvk` to allow topaz to see your gpu. But it doesn't use it, idk why. If you know how to make it use GPU, write it in issue
 
 
 <details>
