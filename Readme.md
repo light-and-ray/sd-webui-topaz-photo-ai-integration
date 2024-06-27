@@ -20,11 +20,6 @@ exit $rc
 
 You also need to install `winetricks` and run `winetricks -q dxvk` to allow topaz to see your gpu
 
-Btw this extension is more about fun, and adding topaz in webui just because it's possibe. If you want to get models with similar quality, you can use [4x-Nomos8kHAT-L-otf](https://openmodeldb.info/models/4x-Nomos8kHAT-L-otf) and [4x-FaceUpDAT](https://openmodeldb.info/models/4x-FaceUpDAT), place them into `models/DAT` directory, or even you can try [StableSR](https://github.com/pkuliyi2015/sd-webui-stablesr)
-
-Btw in some cases Topaz shows the best quality:
-![](/images/comparation.jpg)
-
 
 <details>
 <summary>
@@ -64,3 +59,10 @@ exit /b %rc%
 ```
 
 </details>
+
+Btw this extension is more about fun, and adding topaz in webui just because it's possibe. If you want to get models with similar quality, you can use [4x-Nomos8kHAT-L-otf](https://openmodeldb.info/models/4x-Nomos8kHAT-L-otf) and [4x-FaceUpDAT](https://openmodeldb.info/models/4x-FaceUpDAT), place them into `models/DAT` directory, or even you can try [StableSR](https://github.com/pkuliyi2015/sd-webui-stablesr)
+
+Btw in some cases Topaz shows the best quality:
+![](/images/comparation.jpg)
+
+
