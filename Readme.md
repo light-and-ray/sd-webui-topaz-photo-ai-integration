@@ -13,6 +13,7 @@ If you use Linux, you need to write a script, which launches `tpai.exe` via wine
 ```bash
 #!/bin/bash
 cd "$(dirname "$0")"
+export WINEDEBUG=-all
 wine <path to tpai.exe> "$@"
 rc=$?
 exit $rc
