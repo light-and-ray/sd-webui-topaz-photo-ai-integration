@@ -74,7 +74,16 @@ exit /b %rc%
 
 Just in case, this extension is more about fun, and adding topaz in webui just because it's possibe. If you want to get models with similar quality, you can use [4x-Nomos8kHAT-L-otf](https://openmodeldb.info/models/4x-Nomos8kHAT-L-otf) and [4x-FaceUpDAT](https://openmodeldb.info/models/4x-FaceUpDAT), place them into `models/DAT` directory, or even you can try [StableSR](https://github.com/pkuliyi2015/sd-webui-stablesr)
 
-Btw in some cases Topaz shows the best quality:
+Btw in some cases Topaz shows the best quality among dedicated upscaling models:
 ![](/images/comparation.jpg)
 
+<details>
+<summary>
+but StableSR is still better
+</summary>
 
+![](/images/stablesr.jpg)
+
+And the fastest in pair with turbo model
+
+</details>
