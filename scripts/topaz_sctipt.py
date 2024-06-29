@@ -2,12 +2,31 @@ import gradio as gr
 import copy
 from modules import scripts_postprocessing
 from modules.ui_components import InputAccordion
-from topaz_photo_ai.main import TopazPhotoAIOptions, SharpenOptions, processTopazPhotoAI, SHARPEN_MODELS
+from topaz_photo_ai.main import (TopazPhotoAIOptions, SharpenOptions, processTopazPhotoAI, SHARPEN_MODELS, DENOISE_MODELS,
+    DenoiseOptions,
+)
 
 
 class TopazExtras(scripts_postprocessing.ScriptPostprocessing):
     name = "Topaz Photo AI"
     order = 1020
+
+    def denoiseUI(self):
+        with InputAccordion(False, label='Denoise') as enable:
+            model = gr.Radio(value="Automatic", choices=DENOISE_MODELS, label="Model")
+            strength = gr.Slider(value=-1, minimum=-1, maximum=100, step=1, label="Strength", info="-1 means automatic")
+            minor_denoise = gr.Slider(value=-1, minimum=-1, maximum=100, step=1, label="Minor denoise", info="-1 means automatic")
+            original_detail = gr.Slider(value=-1, minimum=-1, maximum=100, step=1, label="Original detail", info="-1 means automatic")
+
+        args = {
+            'd_enable': enable,
+            'd_model' : model,
+            'd_strength' : strength,
+            'd_minor_denoise' : minor_denoise,
+            'd_original_detail' : original_detail,
+        }
+        return args
+
 
     def sharpenUI(self):
         with InputAccordion(False, label='Sharpen') as enable:
@@ -26,23 +45,33 @@ class TopazExtras(scripts_postprocessing.ScriptPostprocessing):
 
     def ui(self):
         with InputAccordion(False, label=self.name) as enable:
-            sharpenArgs = self.sharpenUI()
+            with gr.Column():
+                denoiseArgs = self.denoiseUI()
+                sharpenArgs = self.sharpenUI()
 
         args = {
             'enable': enable,
         }
+        args.update(denoiseArgs)
         args.update(sharpenArgs)
         return args
 
-    # def process_firstpass(self, pp: scripts_postprocessing.PostprocessedImage, **args):
-    #     pp.shared.target_width = pp.image.width * 2 ** (args['scale'] + 1)
-    #     pp.shared.target_height = pp.image.height * 2 ** (args['scale'] + 1)
+
+
 
     def process(self, pp: scripts_postprocessing.PostprocessedImage, **args):
         if args['enable'] == False:
             return
 
         o = TopazPhotoAIOptions()
+        if args['d_enable']:
+            denoise = DenoiseOptions()
+            denoise.model = args['d_model']
+            denoise.strength = args['d_strength']
+            denoise.minor_denoise = args['d_minor_denoise']
+            denoise.original_detail = args['d_original_detail']
+            o.denoise = denoise
+
         if args['s_enable']:
             sharpen = SharpenOptions()
             sharpen.model = args['s_model']
@@ -55,4 +84,9 @@ class TopazExtras(scripts_postprocessing.ScriptPostprocessing):
         info = copy.copy(args)
         del info['enable']
         pp.info[self.name] = str(info)
+
+
+    # def process_firstpass(self, pp: scripts_postprocessing.PostprocessedImage, **args):
+    #     pp.shared.target_width = pp.image.width * 2 ** (args['scale'] + 1)
+    #     pp.shared.target_height = pp.image.height * 2 ** (args['scale'] + 1)
 

@@ -9,6 +9,35 @@ def simpleUpscale(img: Image.Image, scale: int) -> Image.Image:
 
 
 
+DENOISE_MODELS = ["Automatic", "Normal", "Strong", "Extreme"]
+
+def fillModelForDenoise(args, model):
+    if model == "Normal":
+        args.append("model=Low Light Beta")
+    elif model == "Strong":
+        args.append("model=Severe Noise")
+    elif model == "Extreme":
+        args.append("model=Severe Noise Beta")
+
+def fillParams1ForDenoise(args, strength):
+    args.append(f"param1_normalv2={strength/100}")
+    args.append(f"param1_strongv2={strength/100}")
+    args.append(f"param1={strength/100}")
+
+def fillParams2ForDenoise(args, minor_deblur):
+    args.append(f"param2_normalv2={minor_deblur/100}")
+    args.append(f"param2_strongv2={minor_deblur/100}")
+    args.append(f"param2={minor_deblur/100}")
+
+
+
+class DenoiseOptions:
+    model: str = None
+    strength: int = None
+    minor_denoise: int = None
+    original_detail: int = None
+
+
 
 SHARPEN_MODELS = ["Automatic", "Standard", "Strong", "Lens blur", "Motion blur"]
 
@@ -33,27 +62,43 @@ class SharpenOptions:
 
 @dataclass
 class TopazPhotoAIOptions:
+    denoise: DenoiseOptions = None
     sharpen: SharpenOptions = None
 
 
 
 def processTopazPhotoAI(img: Image.Image, o: TopazPhotoAIOptions):
     args = []
+
+    args.append('--denoise')
+    if o.denoise:
+        if o.denoise.model != "Automatic":
+            fillModelForDenoise(args, o.denoise.model)
+        if o.denoise.strength != -1:
+            fillParams1ForDenoise(args, o.denoise.strength)
+        if o.denoise.minor_denoise != -1:
+            fillParams2ForDenoise(args, o.denoise.minor_denoise)
+        if o.denoise.original_detail != -1:
+            args.append(f'recover_detail={o.denoise.original_detail/100}')
+    else:
+        args.append('enabled=false')
+
     args.append('--sharpen')
     if o.sharpen:
         if o.sharpen.model != "Automatic":
             fillArgsForSharpenModel(args, o.sharpen.model)
         if o.sharpen.strength != -1:
-            args.append(f'param2={o.sharpen.strength}')
+            args.append(f'param2={o.sharpen.strength/100}')
         if o.sharpen.minor_denoise != -1:
-            args.append(f'param1={o.sharpen.minor_denoise}')
+            args.append(f'param1={o.sharpen.minor_denoise/100}')
     else:
         args.append('enabled=false')
 
     args.append('--upscale')
     args.append('enabled=false')
 
-    args.extend(['--face_recovery', 'enabled=false'])
+    args.append('--face_recovery')
+    args.append('enabled=false')
 
     return runTopaz(img, *args)
 

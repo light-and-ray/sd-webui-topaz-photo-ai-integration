@@ -5,8 +5,6 @@ import gradio as gr
 from modules import shared, script_callbacks
 
 
-
-
 def on_ui_settings():
     shared.opts.add_option(
         "topaz_photo_ai_exe",
@@ -34,7 +32,17 @@ def runTopaz_(*cmd):
     print(' '.join(f"'{v}'" if ' ' in v else v for v in cmd))
     rc = subprocess.run(cmd).returncode
     if rc != 0:
-        raise Exception(f'Topaz exited with code {rc}. See console for details')
+        if rc == 2:
+            raise Exception('Maybe another instance of Topaz exists. Return code = 2')
+        if rc == 1:
+            raise Exception('Return code = 1 - Partial Success (e.g., some files failed)')
+        if rc in (-1, 255):
+            raise Exception('Return code = -1 (255) - No valid files passed.')
+        if rc in (-2, 254):
+            raise Exception('Return code = -2 (254) - Invalid log token. Open the app normally to login.')
+        if rc in (-3, 253):
+            raise Exception('Return code = -3 (253) - An invalid argument was found.')
+        raise Exception(f'Topaz exited with code {rc} (Unknown code)')
 
 
 def runTopaz(img: Image.Image, *cmd) -> Image.Image:
