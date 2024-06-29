@@ -14,9 +14,10 @@ class TopazExtras(scripts_postprocessing.ScriptPostprocessing):
     def denoiseUI(self):
         with InputAccordion(False, label='Denoise') as enable:
             model = gr.Radio(value="Automatic", choices=DENOISE_MODELS, label="Model")
-            strength = gr.Slider(value=-1, minimum=-1, maximum=100, step=1, label="Strength", info="-1 means automatic")
-            minor_denoise = gr.Slider(value=-1, minimum=-1, maximum=100, step=1, label="Minor denoise", info="-1 means automatic")
-            original_detail = gr.Slider(value=-1, minimum=-1, maximum=100, step=1, label="Original detail", info="-1 means automatic")
+            with gr.Row():
+                strength = gr.Slider(value=-1, minimum=-1, maximum=100, step=1, label="Strength", info="-1 means automatic")
+                minor_denoise = gr.Slider(value=-1, minimum=-1, maximum=100, step=1, label="Minor denoise", info="-1 means automatic")
+                original_detail = gr.Slider(value=-1, minimum=-1, maximum=100, step=1, label="Original detail", info="-1 means automatic")
 
         args = {
             'd_enable': enable,
@@ -31,8 +32,11 @@ class TopazExtras(scripts_postprocessing.ScriptPostprocessing):
     def sharpenUI(self):
         with InputAccordion(False, label='Sharpen') as enable:
             model = gr.Radio(value="Automatic", choices=SHARPEN_MODELS, label="Model")
-            strength = gr.Slider(value=-1, minimum=-1, maximum=100, step=1, label="Strength", info="-1 means automatic")
-            minor_denoise = gr.Slider(value=-1, minimum=-1, maximum=100, step=1, label="Minor denoise", info="-1 means automatic")
+            with gr.Row():
+                strength = gr.Slider(value=-1, minimum=-1, maximum=100, step=1, label="Strength", info="-1 means automatic")
+                minor_denoise = gr.Slider(value=-1, minimum=-1, maximum=100, step=1, label="Minor denoise", info="-1 means automatic")
+
+        model.change(fn=lambda x: gr.update(visible=(x != "Strong")), inputs=[model], outputs=[minor_denoise], show_progress=False)
 
         args = {
             's_enable': enable,
@@ -48,6 +52,7 @@ class TopazExtras(scripts_postprocessing.ScriptPostprocessing):
             with gr.Column():
                 denoiseArgs = self.denoiseUI()
                 sharpenArgs = self.sharpenUI()
+            gr.Markdown('(Models are tested in version 3.0.4)')
 
         args = {
             'enable': enable,
@@ -83,6 +88,16 @@ class TopazExtras(scripts_postprocessing.ScriptPostprocessing):
 
         info = copy.copy(args)
         del info['enable']
+        keysForDel = set()
+        for key, value in info.items():
+            if not info['d_enable'] and key.startswith('d_'):
+                keysForDel.add(key)
+            if not info['s_enable'] and key.startswith('s_'):
+                keysForDel.add(key)
+            if value in (-1, 'Automatic'):
+                keysForDel.add(key)
+        for key in keysForDel:
+            del info[key]
         pp.info[self.name] = str(info)
 
 
