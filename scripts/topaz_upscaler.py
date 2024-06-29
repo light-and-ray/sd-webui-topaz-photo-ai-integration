@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from modules.upscaler import Upscaler, UpscalerData
-from topaz_photo_ai.main import upscale
+from topaz_photo_ai.main import simpleUpscale
 
 @dataclass
 class Fields:
@@ -25,7 +25,7 @@ class BaseClass(Upscaler):
         super().__init__()
 
     def do_upscale(self, img, selected_model):
-        return upscale(img, self.fields.scale)
+        return simpleUpscale(img, self.fields.scale)
 
 
 class Class0(BaseClass, Upscaler):
