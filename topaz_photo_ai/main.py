@@ -67,6 +67,27 @@ class TopazPhotoAIOptions:
 
 
 
+def argsDictToOptions(args: dict) -> TopazPhotoAIOptions:
+    o = TopazPhotoAIOptions()
+
+    if args['d_enable']:
+        denoise = DenoiseOptions()
+        denoise.model = args['d_model']
+        denoise.strength = args['d_strength']
+        denoise.minor_denoise = args['d_minor_denoise']
+        denoise.original_detail = args['d_original_detail']
+        o.denoise = denoise
+
+    if args['s_enable']:
+        sharpen = SharpenOptions()
+        sharpen.model = args['s_model']
+        sharpen.strength = args['s_strength']
+        sharpen.minor_denoise = args['s_minor_denoise']
+        o.sharpen = sharpen
+
+    return o
+
+
 def processTopazPhotoAI(img: Image.Image, o: TopazPhotoAIOptions):
     args = []
 

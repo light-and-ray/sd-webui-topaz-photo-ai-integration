@@ -2,9 +2,8 @@ import gradio as gr
 import copy
 from modules import scripts_postprocessing
 from modules.ui_components import InputAccordion
-from topaz_photo_ai.main import (TopazPhotoAIOptions, SharpenOptions, processTopazPhotoAI, SHARPEN_MODELS, DENOISE_MODELS,
-    DenoiseOptions,
-)
+from topaz_photo_ai.main import argsDictToOptions, processTopazPhotoAI, SHARPEN_MODELS, DENOISE_MODELS
+
 
 
 class TopazExtras(scripts_postprocessing.ScriptPostprocessing):
@@ -68,23 +67,11 @@ class TopazExtras(scripts_postprocessing.ScriptPostprocessing):
         if args['enable'] == False:
             return
 
-        o = TopazPhotoAIOptions()
-        if args['d_enable']:
-            denoise = DenoiseOptions()
-            denoise.model = args['d_model']
-            denoise.strength = args['d_strength']
-            denoise.minor_denoise = args['d_minor_denoise']
-            denoise.original_detail = args['d_original_detail']
-            o.denoise = denoise
+        if not (args['d_enable'] or args['s_enable']):
+            return
 
-        if args['s_enable']:
-            sharpen = SharpenOptions()
-            sharpen.model = args['s_model']
-            sharpen.strength = args['s_strength']
-            sharpen.minor_denoise = args['s_minor_denoise']
-            o.sharpen = sharpen
-
-        pp.image = processTopazPhotoAI(pp.image, o)
+        options = argsDictToOptions(args)
+        pp.image = processTopazPhotoAI(pp.image, options)
 
         info = copy.copy(args)
         del info['enable']
