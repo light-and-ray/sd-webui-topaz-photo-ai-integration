@@ -41,7 +41,7 @@ def processTopazPhotoAI(img: Image.Image, o: TopazPhotoAIOptions):
     args = []
     args.append('--sharpen')
     if o.sharpen:
-        if o.sharpen.model in SHARPEN_MODELS:
+        if o.sharpen.model != "Automatic":
             fillArgsForSharpenModel(args, o.sharpen.model)
         if o.sharpen.strength != -1:
             args.append(f'param2={o.sharpen.strength}')
