@@ -57,5 +57,8 @@ def runTopaz(img: Image.Image, *cmd) -> Image.Image:
             raise Exception("Topaz didn't process any image")
         return Image.open(fileOut)
     finally:
-        tmpInDir.cleanup()
-        tmpOutDir.cleanup()
+        try:
+            tmpInDir.cleanup()
+            tmpOutDir.cleanup()
+        except:
+            pass
