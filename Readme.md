@@ -52,23 +52,7 @@ exit $rc
 
 `xvfb-run` is not necessary, it's used for hiding cmd.exe window. Can be installed by `sudo yay -S xorg-server-xvfb` on Arch-based, or `sudo apt install xvfb` on Ubuntu-based
 
-Or for Windows (I'm not sure, converted by AI)
-```bat
-@echo off
-setlocal
-cd /d "%~dp0"
-if not exist "App\Topaz Photo AI\Topaz Photo AI_.exe" (
-    move "App\Topaz Photo AI\Topaz Photo AI.exe" "App\Topaz Photo AI\Topaz Photo AI_.exe"
-    move "App\Topaz Photo AI\tpai.exe" "App\Topaz Photo AI\Topaz Photo AI.exe"
-)
-start /wait /min "" cmd /c "PhotoAIportable.exe %*"
-set rc=%errorlevel%
-if not exist "App\Topaz Photo AI\tpai.exe" (
-    move "App\Topaz Photo AI\Topaz Photo AI.exe" "App\Topaz Photo AI\tpai.exe"
-    move "App\Topaz Photo AI\Topaz Photo AI_.exe" "App\Topaz Photo AI\Topaz Photo AI.exe"
-)
-exit /b %rc%
-```
+For Windows it will work bad with admin right request and cmd window every time
 
 </details>
 
