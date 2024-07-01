@@ -9,6 +9,10 @@ Also there are Sharpe and Denoise features in extras tab
 
 To copy path to file in Windows, you need to press right mouse click holding "Shift" button, and select "Copy file as path"
 
+<details>
+<summary>
+For Linux
+</summary>
 
 If you use Linux, you need to write a script, which launches `tpai.exe` via wine, with all arguments passing. E.g.
 
@@ -23,6 +27,8 @@ exit $rc
 ```
 
 You can install `winetricks` and run `winetricks -q dxvk` to allow topaz to see your gpu. But it won't work because dxvk doesn't support directx12 (directml) which is required. Vkd3d in winesticks does support it partially, gpu is utilized, but the image is blured and glitched, so it isn't a proper directml support
+
+</details>
 
 <details>
 <summary>
@@ -52,7 +58,7 @@ exit $rc
 
 `xvfb-run` is not necessary, it's used for hiding cmd.exe window. Can be installed by `sudo yay -S xorg-server-xvfb` on Arch-based, or `sudo apt install xvfb` on Ubuntu-based
 
-For Windows it will work bad with admin right request and cmd window every time
+For Windows a similar script will work but bad with admin right request and cmd window every time. So don't use portable version in Windows
 
 </details>
 
