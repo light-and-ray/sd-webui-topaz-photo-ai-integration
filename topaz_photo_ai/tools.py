@@ -1,7 +1,25 @@
-import subprocess, os
+import subprocess, os, shutil
+from pathlib import Path
 from tempfile import TemporaryDirectory
 from PIL import Image
 from modules import shared
+
+TMP_PREFIX = "sd-webui-topaz_"
+
+def cleanupOldTmp():
+    try:
+        tmpRoot = str(Path(TemporaryDirectory(prefix=TMP_PREFIX).name).parent.absolute())
+        for dir in os.listdir(tmpRoot):
+            if dir.startswith(TMP_PREFIX):
+                try:
+                    shutil.rmtree(os.path.join(tmpRoot, dir))
+                except Exception as e:
+                    print(e)
+    except Exception as e:
+        print(e)
+
+cleanupOldTmp()
+
 
 
 def getTopazAIEXE():
@@ -31,8 +49,8 @@ def runTopaz_(*cmd):
 
 
 def runTopaz(img: Image.Image, *cmd) -> Image.Image:
-    tmpInDir = TemporaryDirectory()
-    tmpOutDir = TemporaryDirectory()
+    tmpInDir = TemporaryDirectory(prefix=TMP_PREFIX)
+    tmpOutDir = TemporaryDirectory(prefix=TMP_PREFIX)
     try:
         fileIn = os.path.join(tmpInDir.name, 'file.jpg')
         img.convert('RGB').save(fileIn, quality=95)
