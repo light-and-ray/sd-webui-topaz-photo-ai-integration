@@ -7,7 +7,7 @@ This extension integrates [Topaz Photo AI](https://www.topazlabs.com/topaz-photo
 
 Also there are Sharpe and Denoise features in extras tab
 
-To copy path to file in Windows, you need to press right mouse click holding "Shift" button, and select "Copy file as path"
+To copy path to file in Windows, you need to press right mouse click holding "Shift" button (or not, depends on OS version), and select "Copy file as path"
 
 <details>
 <summary>
@@ -64,7 +64,7 @@ For Windows a similar script will work but bad with admin right request and cmd 
 
 Just in case, this extension is more about fun, and adding topaz in webui just because it's possibe. If you want to get free models with similar quality, you can use [4x-Nomos8kHAT-L-otf](https://openmodeldb.info/models/4x-Nomos8kHAT-L-otf) and [4x-FaceUpDAT](https://openmodeldb.info/models/4x-FaceUpDAT), place them into `models/DAT` directory, or even you can try [StableSR](https://github.com/pkuliyi2015/sd-webui-stablesr)
 
-Btw in some cases Topaz shows the best quality among dedicated upscaling models. And it's significantly faster even on cpu if you need only 2x upscale
+Btw in some cases Topaz shows the best quality among dedicated upscaling models. And it's significantly faster even on cpu if you need only 2x upscale of a big image
 ![](/images/comparation.jpg)
 
 <details>
