@@ -35,9 +35,9 @@ def runTopaz(img: Image.Image, *cmd) -> Image.Image:
     tmpOutDir = TemporaryDirectory()
     try:
         fileIn = os.path.join(tmpInDir.name, 'file.jpg')
-        fileOut = os.path.join(tmpOutDir.name, 'file.jpg')
         img.convert('RGB').save(fileIn, quality=95)
         runTopaz_('--output', tmpOutDir.name, '--override', *cmd, fileIn)
+        fileOut = os.path.join(tmpOutDir.name, 'file.jpg')
         if not os.path.exists(fileOut):
             raise Exception("Topaz didn't process any image")
         return Image.open(fileOut)
@@ -45,5 +45,5 @@ def runTopaz(img: Image.Image, *cmd) -> Image.Image:
         try:
             tmpInDir.cleanup()
             tmpOutDir.cleanup()
-        except:
+        except Exception:
             pass
