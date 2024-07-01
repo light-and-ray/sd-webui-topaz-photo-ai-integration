@@ -1,28 +1,13 @@
 import subprocess, os
 from tempfile import TemporaryDirectory
 from PIL import Image
-import gradio as gr
-from modules import shared, script_callbacks
-
-
-def on_ui_settings():
-    shared.opts.add_option(
-        "topaz_photo_ai_exe",
-        shared.OptionInfo(
-            "",
-            "Path to topaz's cli executable: tpai.exe or a script-wrapper of it",
-            gr.Textbox,
-            section=('upscaling', "Upscaling")
-        )
-    )
-
-script_callbacks.on_ui_settings(on_ui_settings)
+from modules import shared
 
 
 def getTopazAIEXE():
-    exe = shared.opts.data.get("topaz_photo_ai_exe", "")
+    exe = shared.cmd_opts.topaz_photo_ai_exe
     if not exe or not os.path.exists(exe):
-        raise Exception(f'Topaz executable file is not found. Please set it up in Settings/Upscaling')
+        raise Exception(f'Topaz executable file is not found. Please set it up in --topaz-photo-ai-exe cmd arg')
     return exe
 
 

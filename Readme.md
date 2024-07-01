@@ -1,6 +1,6 @@
 # Topaz Photo AI integration
 
-This extension integrates [Topaz Photo AI](https://www.topazlabs.com/topaz-photo-ai) upscaling feature into [stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui). So you can use it inside *hires fix*, *upscaler_for_img2img* or in *extras* tab. You need to have Topaz Photo AI of version >= 2.1.3 (do not confuse with topaz gigapixel), and provide a path to `tpai.exe` usually located in `C:\Program Files\Topaz Labs LLC\Topaz Photo AI` in `Settings/Upscaling` of webui
+This extension integrates [Topaz Photo AI](https://www.topazlabs.com/topaz-photo-ai) upscaling feature into [stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui). So you can use it inside *hires fix*, *upscaler_for_img2img* or in *extras* tab. You need to have Topaz Photo AI of version >= 2.1.3 (do not confuse with topaz gigapixel), and provide a path to `tpai.exe` usually located in `C:\Program Files\Topaz Labs LLC\Topaz Photo AI` in `--topaz-photo-ai-exe` cmd flag of webui
 
 ![](/images/preview.png)
 ![](/images/upscalers.png)
