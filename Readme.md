@@ -5,7 +5,7 @@ This extension integrates [Topaz Photo AI](https://www.topazlabs.com/topaz-photo
 ![](/images/preview.png)
 ![](/images/upscalers.png)
 
-Sharpen and Denoise AI in extras tab will be added soon
+Also there are Sharpe and Denoise features in extras tab
 
 To copy path to file in Windows, you need to press right mouse click holding "Shift" button, and select "Copy file as path"
 
