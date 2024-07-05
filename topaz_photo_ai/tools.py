@@ -1,4 +1,4 @@
-import subprocess, os, shutil
+import subprocess, os, shutil, time
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from PIL import Image
@@ -20,6 +20,15 @@ def cleanupOldTmp():
 
 cleanupOldTmp()
 
+
+def getElapsedTime(startTime):
+    elapsed = time.perf_counter() - startTime
+    elapsed_m = int(elapsed // 60)
+    elapsed_s = elapsed % 60
+    elapsed_text = f"{elapsed_s:.1f} sec."
+    if elapsed_m > 0:
+        elapsed_text = f"{elapsed_m} min. " + elapsed_text
+    return elapsed_text
 
 
 def getTopazAIEXE():
@@ -51,6 +60,7 @@ def runTopaz_(*cmd):
 def runTopaz(img: Image.Image, *cmd) -> Image.Image:
     tmpInDir = TemporaryDirectory(prefix=TMP_PREFIX)
     tmpOutDir = TemporaryDirectory(prefix=TMP_PREFIX)
+    startTime = time.perf_counter()
     try:
         fileIn = os.path.join(tmpInDir.name, 'file.jpg')
         img.convert('RGB').save(fileIn, quality=95)
@@ -58,7 +68,10 @@ def runTopaz(img: Image.Image, *cmd) -> Image.Image:
         fileOut = os.path.join(tmpOutDir.name, 'file.jpg')
         if not os.path.exists(fileOut):
             raise Exception("Topaz didn't process any image")
-        return Image.open(fileOut)
+        with Image.open(fileOut) as f:
+            result = f.copy()
+        print(f'Time taken {getElapsedTime(startTime)}')
+        return result
     finally:
         try:
             tmpInDir.cleanup()
